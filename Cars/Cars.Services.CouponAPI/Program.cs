@@ -30,4 +30,21 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+ApplyMigration();
+
 app.Run();
+
+// MUA : Apply Migrations automatically
+
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var database = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if(database.Database.GetPendingMigrations().Count() > 0)
+        {
+            database.Database.Migrate();
+        }
+    }
+}
