@@ -1,8 +1,10 @@
-﻿using Cars.Services.CouponAPI.DAL;
+﻿using AutoMapper;
+using Cars.Services.CouponAPI.DAL;
 using Cars.Services.CouponAPI.Models;
 using Cars.Services.CouponAPI.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cars.Services.CouponAPI.Controllers
 {
@@ -12,11 +14,13 @@ namespace Cars.Services.CouponAPI.Controllers
     {
         private readonly AppDbContext _appDbContext;
         private ResponseDTO _responseDTO;
+        private IMapper _mapper;
 
-        public CouponAPIController(AppDbContext appDbContext)
+        public CouponAPIController(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
             _responseDTO = new ResponseDTO();
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -25,7 +29,7 @@ namespace Cars.Services.CouponAPI.Controllers
             try
             {
                 IEnumerable<Coupon> couponList = _appDbContext.Coupons.ToList();
-                _responseDTO.Result = couponList;
+                _responseDTO.Result = _mapper.Map<IEnumerable<CouponDTO>>(couponList);
             }
             catch (Exception ex)
             {
@@ -42,7 +46,7 @@ namespace Cars.Services.CouponAPI.Controllers
             try
             {
                 Coupon singleCoupon = _appDbContext.Coupons.First(x => x.CouponId == id);
-                _responseDTO.Result = singleCoupon;
+                _responseDTO.Result = _mapper.Map<CouponDTO>(singleCoupon); 
             }
             catch (Exception ex)
             {
