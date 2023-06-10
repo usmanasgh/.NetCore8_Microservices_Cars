@@ -110,5 +110,21 @@ namespace Cars.Services.CouponAPI.Controllers
             return _responseDTO;
         }
 
+        [HttpDelete]
+        public ResponseDTO Delete(int id)
+        {
+            try
+            {
+                Coupon coupon = _appDbContext.Coupons.First(u => u.CouponId == id);
+                _appDbContext.Coupons.Remove(coupon);
+                _appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.Success = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
     }
 }
