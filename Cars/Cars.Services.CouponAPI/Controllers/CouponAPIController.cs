@@ -55,5 +55,60 @@ namespace Cars.Services.CouponAPI.Controllers
             }
             return _responseDTO;
         }
+
+        [HttpGet]
+        [Route("GetByCode/{code}")]
+        public ResponseDTO GetByCode(string code)
+        {
+            try
+            {
+                Coupon singleCoupon = _appDbContext.Coupons.First(x => x.CouponCode.ToLower() == code.ToLower());
+                
+                _responseDTO.Result = _mapper.Map<CouponDTO>(singleCoupon);
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.Success = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
+        [HttpPost]
+        public ResponseDTO Post([FromBody] CouponDTO couponDTO)
+        {
+            try
+            {
+                Coupon coupon = _mapper.Map<Coupon>(couponDTO);
+                _appDbContext.Coupons.Add(coupon);
+                _appDbContext.SaveChanges();
+                _responseDTO.Result = _mapper.Map<CouponDTO>(coupon);
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.Success = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
+        [HttpPut]
+        public ResponseDTO Put([FromBody] CouponDTO couponDTO)
+        {
+            try
+            {
+                Coupon coupon = _mapper.Map<Coupon>(couponDTO);
+                _appDbContext.Coupons.Update(coupon);
+                _appDbContext.SaveChanges();
+                _responseDTO.Result = _mapper.Map<CouponDTO>(coupon);
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.Success = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
     }
 }
