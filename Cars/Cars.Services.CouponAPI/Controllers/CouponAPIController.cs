@@ -8,7 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Cars.Services.CouponAPI.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/coupon")] // MUA : Hardcoded values, if controller name updated, still works
     [ApiController]
     public class CouponAPIController : ControllerBase
     {
