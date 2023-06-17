@@ -32,6 +32,12 @@ namespace Cars.UI.Controllers
             return View(list);
         }
 
+        public async Task<IActionResult> CouponCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CouponCreate(CouponDTO model)
         {
             if(ModelState.IsValid)
