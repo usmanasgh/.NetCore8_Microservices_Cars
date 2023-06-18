@@ -50,5 +50,20 @@ namespace Cars.Services.Security.AuthAPI.Controllers
             return Ok(_responseDTO);
         }
 
+        [HttpPost("AssignRole")]
+        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDTO model)
+        {
+            var loginResponse = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+
+            if (!loginResponse)
+            {
+                _responseDTO.Success = false;
+                _responseDTO.Message = "Error encountered";
+                return BadRequest(_responseDTO);
+            }
+
+            return Ok(_responseDTO);
+        }
+
     }
 }
