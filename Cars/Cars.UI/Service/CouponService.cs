@@ -1,6 +1,6 @@
-﻿using Cars.Services.CouponAPI.Utility;
-using Cars.UI.Models;
+﻿using Cars.UI.Models;
 using Cars.UI.Service.IService;
+using Cars.UI.Utility;
 
 namespace Cars.UI.Service
 {
@@ -17,7 +17,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.POST,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = couponDTO,
                 Url = ApiConstants.CouponAPIBase + "/api/coupon"
             });
@@ -27,7 +27,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.DELETE,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.DELETE,
                 Url = ApiConstants.CouponAPIBase + "/api/coupon/" + id
             });
         }
@@ -36,7 +36,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.GET,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.GET,
                 Url = ApiConstants.CouponAPIBase+"/api/coupon"
             });
         }
@@ -45,7 +45,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.GET,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.GET,
                 Url = ApiConstants.CouponAPIBase + "/api/coupon/GetByCode/" + couponCode
             });
         }
@@ -54,7 +54,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.GET,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.GET,
                 Url = ApiConstants.CouponAPIBase + "/api/coupon/" + id
             });
         }
@@ -63,7 +63,7 @@ namespace Cars.UI.Service
         {
             return await _baseService.SendAsync(new RequestDTO()
             {
-                ApiType = Services.CouponAPI.Utility.ApiConstants.ApiTypeEnum.PUT,
+                ApiType = UI.Utility.ApiConstants.ApiTypeEnum.PUT,
                 Data = couponDTO,
                 Url = ApiConstants.CouponAPIBase + "/api/coupon"
             });

@@ -1,5 +1,5 @@
-﻿using static Cars.Services.CouponAPI.Utility.ApiConstants;
-using System.Security.AccessControl;
+﻿using System.Security.AccessControl;
+using static Cars.UI.Utility.ApiConstants;
 
 namespace Cars.UI.Models
 {
@@ -9,7 +9,7 @@ namespace Cars.UI.Models
 
         public string Url { get; set; }
 
-        public CouponDTO Data { get; set; }
+        public object Data { get; set; }
 
         public string AccessToken { get; set; }
     }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json.Serialization;
-using static Cars.Services.CouponAPI.Utility.ApiConstants;
+using static Cars.UI.Utility.ApiConstants;
 using ResponseDTO = Cars.UI.Models.ResponseDTO;
 
 namespace Cars.UI.Service
@@ -48,7 +48,6 @@ namespace Cars.UI.Service
                     default:
                         message.Method = HttpMethod.Get;
                         break;
-
                 }
 
                 apiResponse = await httpClient.SendAsync(message);
@@ -67,7 +66,6 @@ namespace Cars.UI.Service
                         var apiContent = await apiResponse.Content.ReadAsStringAsync();
                         var apiResponseDTO = JsonConvert.DeserializeObject<ResponseDTO>(apiContent);
                         return apiResponseDTO;
-
                 }
             }
             catch (Exception ex)
