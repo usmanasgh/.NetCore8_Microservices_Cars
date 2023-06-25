@@ -21,7 +21,7 @@ namespace Cars.UI.Service
             {
                 ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = registrationRequestDTO,
-                Url = ApiConstants.CouponAPIBase + "/api/auth/AssignRole"
+                Url = ApiConstants.AuthAPIBase + "/api/auth/AssignRole"
             });
         }
 
@@ -31,7 +31,7 @@ namespace Cars.UI.Service
             {
                 ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = loginRequestDTO,
-                Url = ApiConstants.CouponAPIBase + "/api/auth/login"
+                Url = ApiConstants.AuthAPIBase + "/api/auth/login"
             });
         }
 
@@ -41,7 +41,7 @@ namespace Cars.UI.Service
             {
                 ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = registrationRequestDTO,
-                Url = ApiConstants.CouponAPIBase + "/api/auth/login"
+                Url = ApiConstants.AuthAPIBase + "/api/auth/register"
             });
         }
     }
