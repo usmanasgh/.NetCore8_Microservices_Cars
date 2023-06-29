@@ -3,6 +3,7 @@ using Cars.UI.Service.IService;
 using Cars.UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace Cars.UI.Controllers
 {
@@ -23,6 +24,23 @@ namespace Cars.UI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequestDTO model)
+        {
+            ResponseDTO responseDTO = await _authService.LoginAsync(model);
+
+            if (responseDTO != null && responseDTO.Success)
+            {
+                LoginResponseDTO loginResponseDTO = JsonConvert.DeserializeObject<LoginResponseDTO>(Convert.ToString(responseDTO.Result));
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("CustomError", responseDTO.Message);
+                return View(model);
+            }
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -40,25 +58,32 @@ namespace Cars.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationRequestDTO model)
         {
-            ResponseDTO result = await _authService.RegisterAsync(model);
-            ResponseDTO assignRole;
+            if(ModelState.IsValid) {
 
-            if(result != null && result.Success)
-            {
-                if(string.IsNullOrEmpty(model.Role))
+                ResponseDTO result = await _authService.RegisterAsync(model);
+                ResponseDTO assignRole;
+
+                if (result != null && result.Success)
                 {
-                    model.Role = ApiConstants.RoleCustomer;
+                    if (string.IsNullOrEmpty(model.Role))
+                    {
+                        model.Role = ApiConstants.RoleCustomer;
+                    }
+
+                    assignRole = await _authService.AssignRoleAsync(model);
+
+                    if (assignRole != null && assignRole.Success)
+                    {
+                        TempData["success"] = "Registration Successful";
+                        return RedirectToAction(nameof(Login));
+                    }
                 }
-                
-                assignRole = await _authService.AssignRoleAsync(model);
-                
-                if(assignRole != null && assignRole.Success)
+                else
                 {
-                    TempData["success"] = "Registration Successful";
-                    return RedirectToAction(nameof(Login));
+                    ModelState.AddModelError("CustomError", result.Message);
                 }
             }
-
+            
             var roleList = new List<SelectListItem>()
             {
                 new SelectListItem{Text = ApiConstants.RoleAdmin, Value = ApiConstants.RoleAdmin},

@@ -62,6 +62,8 @@ namespace Cars.UI.Service
                         return new() { Success = false, Message = "Unauthorized" };
                     case System.Net.HttpStatusCode.InternalServerError:
                         return new() { Success = false, Message = "Internal Server Error" };
+                    case System.Net.HttpStatusCode.BadRequest:
+                        return new() { Success = false, Message = "Bad Request" };
                     default:
                         var apiContent = await apiResponse.Content.ReadAsStringAsync();
                         var apiResponseDTO = JsonConvert.DeserializeObject<ResponseDTO>(apiContent);
