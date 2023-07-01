@@ -5,7 +5,7 @@ namespace Cars.UI.Service.IService
     public interface IBaseService
     {
         // MUA : Async method
-        Task<ResponseDTO?> SendAsync(RequestDTO requestDTO);
+        Task<ResponseDTO?> SendAsync(RequestDTO requestDTO, bool withBearer = true);
 
     }
 }

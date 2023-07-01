@@ -32,7 +32,7 @@ namespace Cars.UI.Service
                 ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = loginRequestDTO,
                 Url = ApiConstants.AuthAPIBase + "/api/auth/login"
-            });
+            }, withBearer: false);
         }
 
         public async Task<ResponseDTO?> RegisterAsync(RegistrationRequestDTO registrationRequestDTO)
@@ -42,7 +42,7 @@ namespace Cars.UI.Service
                 ApiType = UI.Utility.ApiConstants.ApiTypeEnum.POST,
                 Data = registrationRequestDTO,
                 Url = ApiConstants.AuthAPIBase + "/api/auth/register"
-            });
+            }, withBearer: false);
         }
     }
 }
