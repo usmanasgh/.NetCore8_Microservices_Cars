@@ -2,6 +2,7 @@
 using Cars.Services.CouponAPI.DAL;
 using Cars.Services.CouponAPI.Models;
 using Cars.Services.CouponAPI.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,7 @@ namespace Cars.Services.CouponAPI.Controllers
     //[Route("api/[controller]")]
     [Route("api/coupon")] // MUA : Hardcoded values, if controller name updated, still works
     [ApiController]
+    [Authorize ]
     public class CouponAPIController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;

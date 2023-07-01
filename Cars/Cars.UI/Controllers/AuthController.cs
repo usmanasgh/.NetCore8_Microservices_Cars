@@ -46,6 +46,7 @@ namespace Cars.UI.Controllers
             }
             else
             {
+                TempData["error"] = responseDTO.Message;
                 ModelState.AddModelError("CustomError", responseDTO.Message);
                 return View(model);
             }
@@ -90,6 +91,7 @@ namespace Cars.UI.Controllers
                 }
                 else
                 {
+                    TempData["error"] = result.Message;
                     ModelState.AddModelError("CustomError", result.Message);
                 }
             }
@@ -116,6 +118,9 @@ namespace Cars.UI.Controllers
 
         private async Task SignInUser(LoginResponseDTO model)
         {
+            // MUA: Extracting all the claims
+            // MUA: We can extract all the claims and roles, and verify each user request
+            
             var handler = new JwtSecurityTokenHandler();
 
             var jwt = handler.ReadJwtToken(model.Token);
@@ -129,9 +134,14 @@ namespace Cars.UI.Controllers
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name,
                         jwt.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name).Value));
 
+            
             identity.AddClaim(new Claim(ClaimTypes.Name,
             jwt.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email).Value));
 
+            identity.AddClaim(new Claim(ClaimTypes.Role,
+            jwt.Claims.FirstOrDefault(c => c.Type == "role").Value));
+
+            // MUA: All claims are part of 'identity'.
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
